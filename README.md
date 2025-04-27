@@ -1,4 +1,4 @@
-# Screenshot to PDF Converter
+# Screenshot URL to PDF Converter
 
 A Python utility that automatically captures screenshots of URLs from an Excel file and converts them to PDF documents.
 
