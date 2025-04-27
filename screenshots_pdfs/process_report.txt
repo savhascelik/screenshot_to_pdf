@@ -1,9 +1,9 @@
-Toplam URL: 1
-Baþarýlý: 0
-Baþarýsýz: 1
+Total URLs: 1
+Successful: 0
+Failed: 1
 
-Baþarýsýz URL'ler:
+Failed URLs:
 URL: https://www.amazon.com/HexClad-Nonstick-Stockpot-Dishwasher-Compatible/dp/B0BKTPYLKT/ref=sr_1_1_sspa?_encoding=UTF8&content-id=amzn1.sym.2f889ce0-246f-467a-a086-d9a721167240&dib=eyJ2IjoiMSJ9.Zx4qzSQKB5wDJhXF4Ir8duM2iUsKTF3ceK7F1tOiCQ1SDKer2MI5b_QOOO1rn2gyBpHreWc9k3ABeMDZBDTsebdYnOhoVyUhsZhllQnnKrKcNZKkmftrblOrhg7XUCjd6m4iE3gum9rCk1eEejlVDITzm7oy5gpeO4mK0acIxpTJZ8dOVFio7GKjJ0B4lGFw5vDVQdXzrHiIau-2FAgV4fe46eYRHGnDZJ3nrowXtDY.Xv5KoxWvwCVs7rAgQSVq239q6pxCrQxBgK-c8Nj-Kbs&dib_tag=se&keywords=cooker&pd_rd_r=fcdf90b7-2ec8-4cfa-a85a-98214e7ffee7&pd_rd_w=NzQsB&pd_rd_wg=NNykU&qid=1745767881&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1
-Marka: Example Brand
-Hata: [WinError 32] Dosya baþka bir iþlem tarafýndan kullanýldýðýndan bu iþlem dosyaya eriþemiyor: 'screenshots_pdfs\\Example Brand\\20250427_183638_0_www.amazon.comHexClad-Nonstick-Stockpot-Dishwasher.png'
+Brand: Example Brand
+Error: [WinError 32] Dosya baþka bir iþlem tarafýndan kullanýldýðýndan bu iþlem dosyaya eriþemiyor: 'screenshots_pdfs\\Example Brand\\20250427_184614_0_www.amazon.comHexClad-Nonstick-Stockpot-Dishwasher.png'
 

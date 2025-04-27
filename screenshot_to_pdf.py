@@ -8,20 +8,20 @@ import img2pdf
 from PIL import Image
 
 def human_like_delay():
-    """İnsan benzeri rastgele bekleme süreleri"""
+    """Random human-like delay between actions"""
     time.sleep(random.uniform(1, 3))
 
 def setup_stealth_page(context):
-    """Bot benzeri davranışları gizlemek için sayfa ayarları"""
+    """Page settings to hide bot-like behavior"""
     page = context.new_page()
     
-    # User-Agent ve diğer tarayıcı özelliklerini ayarla
+    # Set User-Agent and other browser properties
     page.set_extra_http_headers({
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
         'Accept-Language': 'en-US,en;q=0.9',
     })
     
-    # WebDriver özelliğini gizle
+    # Hide WebDriver property
     page.add_init_script("""
         Object.defineProperty(navigator, 'webdriver', {
             get: () => undefined
@@ -44,7 +44,7 @@ def take_screenshot(url, output_dir, brand_name, url_index):
     
     try:
         with sync_playwright() as p:
-            # Tarayıcı başlatma ayarları
+            # Browser launch settings
             browser = p.chromium.launch(
                 headless=True,
                 args=[
@@ -63,30 +63,30 @@ def take_screenshot(url, output_dir, brand_name, url_index):
             
             page = setup_stealth_page(context)
             
-            # Rastgele scroll hareketleri
+            # Random scroll movements
             def random_scroll():
                 for _ in range(random.randint(2, 5)):
                     page.evaluate(f"() => window.scrollBy(0, {random.randint(200, 800)})")
                     human_like_delay()
             
-            # Sayfayı yükle
+            # Load the page
             page.goto(url, timeout=60000, wait_until='domcontentloaded')
             human_like_delay()
             
-            # CAPTCHA kontrolü
+            # CAPTCHA check
             if "robot" in page.title().lower() or "captcha" in page.content().lower():
-                raise Exception("CAPTCHA algılandı")
+                raise Exception("CAPTCHA detected")
             
-            # İnsan benzeri etkileşimler
+            # Human-like interactions
             random_scroll()
             
-            # Ekran görüntüsü al
+            # Take screenshot
             page.screenshot(path=filepath, full_page=True)
             human_like_delay()
             
             browser.close()
         
-        # PDF dönüştürme
+        # Convert to PDF
         pdf_filename = filename.replace('.png', '.pdf')
         pdf_path = os.path.join(brand_dir, pdf_filename)
         
@@ -99,7 +99,7 @@ def take_screenshot(url, output_dir, brand_name, url_index):
         return True, pdf_path
     
     except Exception as e:
-        print(f"Hata oluştu ({url}): {str(e)}")
+        print(f"Error occurred ({url}): {str(e)}")
         return False, str(e)
 
 def process_urls(excel_path, output_dir, max_retries=2):
@@ -117,7 +117,7 @@ def process_urls(excel_path, output_dir, max_retries=2):
         if pd.isna(url) or str(url).strip() == '':
             continue
             
-        print(f"İşleniyor {i+1}/{len(urls)}: {url}")
+        print(f"Processing {i+1}/{len(urls)}: {url}")
         
         retry_count = 0
         success = False
@@ -127,8 +127,8 @@ def process_urls(excel_path, output_dir, max_retries=2):
             
             if not success and "CAPTCHA" in str(result):
                 retry_count += 1
-                print(f"CAPTCHA algılandı, {max_retries-retry_count} deneme hakkı kaldı")
-                time.sleep(random.randint(10, 30))  # Uzun bekleme
+                print(f"CAPTCHA detected, {max_retries-retry_count} attempts remaining")
+                time.sleep(random.randint(10, 30))  # Long wait
             else:
                 break
         
@@ -144,14 +144,14 @@ def process_urls(excel_path, output_dir, max_retries=2):
     
     report_path = os.path.join(output_dir, "process_report.txt")
     with open(report_path, 'w') as f:
-        f.write(f"Toplam URL: {len(urls)}\n")
-        f.write(f"Başarılı: {report['success']}\n")
-        f.write(f"Başarısız: {report['fail']}\n\n")
-        f.write("Başarısız URL'ler:\n")
+        f.write(f"Total URLs: {len(urls)}\n")
+        f.write(f"Successful: {report['success']}\n")
+        f.write(f"Failed: {report['fail']}\n\n")
+        f.write("Failed URLs:\n")
         for item in report['failed_urls']:
             f.write(f"URL: {item['url']}\n")
-            f.write(f"Marka: {item['brand']}\n")
-            f.write(f"Hata: {item['error']}\n\n")
+            f.write(f"Brand: {item['brand']}\n")
+            f.write(f"Error: {item['error']}\n\n")
     
     return report
 
@@ -160,7 +160,7 @@ if __name__ == "__main__":
     output_directory = "screenshots_pdfs"
     os.makedirs(output_directory, exist_ok=True)
     
-    print("İşlem başlıyor...")
+    print("Starting process...")
     start_time = time.time()
     
     result = process_urls(excel_file, output_directory)
@@ -168,9 +168,9 @@ if __name__ == "__main__":
     end_time = time.time()
     duration = end_time - start_time
     
-    print("\nİşlem tamamlandı!")
-    print(f"Toplam süre: {duration:.2f} saniye")
-    print(f"Toplam URL: {result['success'] + result['fail']}")
-    print(f"Başarılı: {result['success']}")
-    print(f"Başarısız: {result['fail']}")
-    print(f"Rapor dosyası: {os.path.join(output_directory, 'process_report.txt')}")
+    print("\nProcess completed!")
+    print(f"Total time: {duration:.2f} seconds")
+    print(f"Total URLs: {result['success'] + result['fail']}")
+    print(f"Successful: {result['success']}")
+    print(f"Failed: {result['fail']}")
+    print(f"Report file: {os.path.join(output_directory, 'process_report.txt')}")
